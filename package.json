@@ -19,6 +19,8 @@
         "@react-three/drei": "9.97.0",
         "@react-three/fiber": "^8.15.16",
         "@react-three/postprocessing": "^2.15.13",
+        "@tensorflow-models/coco-ssd": "^2.2.3",
+        "@tensorflow/tfjs": "^4.20.0",
         "fabric": "^5.3.0",
         "leva": "^0.9.35",
         "loglevel": "^1.9.1",
