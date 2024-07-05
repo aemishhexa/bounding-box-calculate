@@ -1,9 +1,12 @@
 import React from 'react';
+import ObjectDetection from './components/BoundingboxCalculate';
 
 function App() {
     return (
         <>
-            <div className="main"></div>
+            <div className="main">
+                <ObjectDetection />
+            </div>
         </>
     );
 }
