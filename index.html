@@ -6,69 +6,11 @@
             name="viewport"
             content="width=device-width, initial-scale=1.0, user-scalable=no" />
         <title>Test</title>
-        <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
-        <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/coco-ssd"></script>
     </head>
 
     <body>
         <div id="root"></div>
 
         <script type="module" src="/src/index.jsx"></script>
-
-        <input type="file" id="upload" accept="image/*" />
-        <canvas id="canvas"></canvas>
-
-        <script>
-            document
-                .getElementById('upload')
-                .addEventListener('change', handleImageUpload);
-
-            async function handleImageUpload(event) {
-                const file = event.target.files[0];
-                if (!file) {
-                    console.error('No file uploaded');
-                    return;
-                }
-
-                const img = new Image();
-                img.onload = async function () {
-                    const canvas = document.getElementById('canvas');
-                    const ctx = canvas.getContext('2d');
-                    canvas.width = img.width;
-                    canvas.height = img.height;
-                    ctx.drawImage(img, 0, 0);
-
-                    // Load the COCO-SSD model
-                    const model = await cocoSsd.load();
-
-                    // Perform object detection
-                    const predictions = await model.detect(img);
-
-                    // Log bounding boxes to the console
-                    predictions.forEach((prediction) => {
-                        const [x, y, width, height] = prediction.bbox;
-                        console.log(
-                            `Bounding Box - x: ${x}, y: ${y}, width: ${width}, height: ${height}`,
-                        );
-                    });
-
-                    // Optionally, draw bounding boxes on the canvas
-                    drawBoundingBoxes(predictions, ctx);
-                };
-                img.src = URL.createObjectURL(file);
-            }
-
-            function drawBoundingBoxes(predictions, ctx) {
-                predictions.forEach((prediction) => {
-                    const [x, y, width, height] = prediction.bbox;
-                    ctx.strokeStyle = 'red';
-                    ctx.lineWidth = 1;
-                    ctx.strokeRect(x, y, width, height);
-                    ctx.font = '18px Arial';
-                    ctx.fillStyle = 'red';
-                    ctx.fillText(prediction.class, x, y > 10 ? y - 5 : 10);
-                });
-            }
-        </script>
     </body>
 </html>
